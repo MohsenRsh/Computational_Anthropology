@@ -1,0 +1,684 @@
+    1  pwd
+    2  clear
+    3  ls
+    4  ls Scaricati/
+    5  ls
+    6  mv Scaricati/PracticeFolder2024.zip . 
+    7  pwd
+    8  ls
+    9  unzip PracticeFolder2024.zip 
+   10  ls
+   11  cd PracticeFolder2024/
+   12  ls
+   13  cd DATA/
+   14  ls
+   15  head 1kgchr1.bim
+   16  wc -l 1kgchr1.bim
+   17  head 1kgchr1.fam
+   18  wc 1kgchr1.fam
+   19  more /opt/CompAnthExport/
+   20  cd ../../
+   21  mkdir bin
+   22  ls
+   23  cp /opt/CompAnthExport/* bin/
+   24  cd bin
+   25  ls 
+   26  cd ../
+   27  ls bin/
+   28  cd PracticeFolder2024/
+   29  ls
+   30  mkdir PLAYGROUND
+   31  cd PLAYGROUND/
+   32  ls
+   33  ../../bin/plink --bfile ../DATA/1kgchr1 --freq --out banana
+   34  head banana.frq
+   35  head ../DATA/1kgchr1.fam
+   36  cut -f 1 ../DATA/1kgchr1.fam -d ' '| head
+   37  cut -f 1 ../DATA/1kgchr1.fam -d ' '| sort -u
+   38  grep TSI ../DATA/1kgchr1.fam | head
+   39  grep TSI ../DATA/1kgchr1.fam > TSI.txt
+   40  ls
+   41  wc -l TSI.txt 
+   42  ../../bin/plink --bfile ../DATA/1kgchr1 --freq --out TSI --keep TSI.txt
+   43  paste banana.frq TSI.frq | head
+   44  history > 20240412.txt
+   45  history > 20240412.txt | head
+   46  20240412.txt | head
+   47  more 20240412.txt 
+   48  pwd
+   49  ls
+   50  ls .bashrc
+   51  ls bin/
+   52  more .bashrc
+   53  plink
+   54  pwd
+   55  cd bin
+   56  pwd
+   57  plink
+   58  cd PracticeFolder2024/PLAYGROUND/
+   59  more admix2.txt 
+   60  cd PracticeFolder2024/PLAYGROUND/
+   61  more admix2.txt 
+   62  which plink
+   63  which andrea
+   64  cd PracticeFolder2024/
+   65  ls
+   66  cd PLAYGROUND/
+   67  ls ../DATA/*
+   68  clear
+   69  plink --bfile ../DATA/
+   70  plink
+   71  plink --bfile ../DATA/
+   72  plink --bfile ../DATA/Dataset2024 --indep-pairwise 50 10 0.1 --out Myfirstpruning
+   73  ls
+   74  plink --bfile ../DATA/Dataset2024 --extract Myfirstpruning.prune.in --make-bed --out Dataset2024_pruned
+   75  ls
+   76  plink --bfile ../DATA/Dataset2024 --indep-pairwise 50 10 0.2 --out Myfirstpruning02
+   77  plink --bfile ../DATA/Dataset2024 --extract Myfirstpruning02.prune.in --make-bed --out RelaxedDataset2024_pruned
+   78  wc -l *bim
+   79  clear
+   80  wc -l *bim
+   81  admixture RelaxedDataset2024_pruned.bed2 --cv > admix2.txt
+   82  admixture RelaxedDataset2024_pruned.bed 2 --cv > admix2.txt
+   83  ls
+   84  wc -l RelaxedDataset2024_pruned.2*
+   85  wc -l RelaxedDataset2024_pruned.*
+   86  head RelaxedDataset2024_pruned.2.Q
+   87  paste RelaxedDataset2024_pruned.fam RelaxedDataset2024_pruned.2.Q | head
+   88  paste RelaxedDataset2024_pruned.bim RelaxedDataset2024_pruned.2.P | head
+   89  ls
+   90  k
+   91  PracticeFolder2024/PLAYGROUND/
+   92  PracticeFolder2024/
+   93  PracticeFolder2024/PLAYGROUND/
+   94  cd PracticeFolder2024/PLAYGROUND/
+   95  more ../OTHER/conversion.par
+   96  cat ../OTHER/conversion.par
+   97  cat ../OTHER/conversion.par | sed -e "s/mergeHGDPchr1_1kg_pruned/RelaxedDataset2024_pruned/g"
+   98  cat ../OTHER/conversion.par | sed -e "s/mergeHGDPchr1_1kg_pruned/RelaxedDataset2024_pruned/g" > convertrelax.par
+   99  convertf -p convertrelax.par 
+  100  ls
+  101  history > 20240418.txt
+  102  clear
+  103  convert -p
+  104  convertf -p
+  105  ls *p
+  106  cat convertrelax.par
+  107  ls
+  108  cd PracticeFolder2024/PLAYGROUND/
+  109  ls
+  110  cp ../OTHER/example.pca.par
+  111  cp ../OTHER/example.pca.par .
+  112  cat example.pca.par
+  113  ls
+  114  cat example.pca.par | sed -e "s/mergeHGDPchr1_1kg_pruned/RelaxedDataset2024_pruned/g" | head -11
+  115  cat example.pca.par | sed -e "s/mergeHGDPchr1_1kg_pruned/RelaxedDataset2024_pruned/g" | head -11 > Dataset2024_pruned.pca.par
+  116  smartpca -p Dataset2024_pruned.pca.par
+  117  history
+  118  ls -lht | head
+  119  head RelaxedDataset2024_pruned.pca.evec 
+  120  ls *meta*
+  121  head Dataset2024_meta.txt 
+  122  cat Dataset2024_meta.txt | awk '{print $1 "\t" $2 "\t" $5"_"%2}' | head
+  123  cat Dataset2024_meta.txt | awk '{print $1 "\t" $2 "\t" $5"_"$2}' | head
+  124  cat Dataset2024_meta.txt | awk '{print $1 "\t" $2 "\t" $5"_"$2}' | head > Poplist.txt
+  125  wc -l Poplist.txt
+  126  cat Dataset2024_meta.txt | awk '{print $1 "\t" $2 "\t" $5"_"$2}' > Poplist.txt
+  127  wc -l Poplist.txt
+  128  perl ../SCRIPTS/AnnotateEvec.pl Poplist.txt 3 RelaxedDataset2024_pruned.pca.evec temp.txt
+  129  head temp.txt 
+  130  mv temp.txt Annotated_RelaxedDataset2024_pruned.pca.evec
+  131  ls *zip
+  132  unzip AdmixtureExport.zip 
+  133  cd AdmixtureExport/
+  134  ls
+  135  head Relaxed_Dataset2024_pruned.2.Q
+  136  paste Relaxed_Dataset2024_pruned.fam Relaxed_Dataset2024_pruned.2.Q | head
+  137  perl ../../SCRIPTS/AnnotateFam.pl ../Poplist.txt 2 Relaxed_Dataset2024_pruned.fam temp.txt
+  138  head temp.txt 
+  139  mv temp.txt Relaxed_Dataset2024_pruned.fam
+  140  pwd
+  141  ls
+  142  more admix2
+  143  grep CV admix*txt
+  144  history > 20240419
+  145  history > 20240419.txt
+  146  pwd
+  147  cd PracticeFolder2024/
+  148  PLAYGROUND/
+  149  ls *bim
+  150  ws -l *bim
+  151  cd PLAYGROUND/
+  152  plink --bfile RelaxedDataset2024_pruned. --recode transpose --out ToFstats_pruned
+  153  plink --bfile RelaxedDataset2024_pruned --recode transpose --out ToFstats_pruned
+  154  ls -lht | head
+  155  head ToFstats_pruned.tfam
+  156  history | grep Anno
+  157  head Poplist.txt 
+  158  perl ../SCRIPTS/AnnotateFam.pl Poplist.txt 2 ToFstats_pruned.tfam temp.txt
+  159  haed -2 temp.txt 
+  160  head -2 temp.txt 
+  161  mv temp.txt ToFstats_pruned.tfam
+  162  grep -w Han ToFstats_pruned.tfam |head -1
+  163  grep  Papuan ToFstats_pruned.tfam
+  164  cut -f 1 ToFstats_pruned. -d
+  165  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Telugu,PapuanHighlands --f3
+  166  cut -f 1 ToFstats_pruned. -d ' ' |sort -u
+  167  cut -f 1 ToFstats_pruned.tfam -d ' ' |sort -u
+  168  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Telugu,PapuanHighlands --f3 >> F3s.txt
+  169  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Balochi,Hazara --f3
+  170  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Hazara,Japanese,Mbuti --f4
+  171  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Japanese,French,Mbuti --f4
+  172  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Japanese,Hazara,Mbuti --f4
+  173  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Combodian,Hazara,Mbuti --f4
+  174  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Cambodian,Hazara,Mbuti --f4
+  175  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Japanese,Cambodian,Hazara,Mbuti --f4
+  176  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Japanese,Mongolian,Hazara,Mbuti --f4
+  177  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Balochi,Hazara,Han,Mbuti --f4
+  178  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Balochi,Japanese,Han,Mbuti --f4
+  179  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Balochi,Han,Japanese,Mbuti --f4
+  180  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Balochi,Han,Mongolian,Mbuti --f4
+  181  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Balochi,Han,Cambodian,Mbuti --f4
+  182  history > 20240502.txt
+  183  cd PracticeFolder2024/PLAYGROUND/
+  184  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Balochi,Hazara --f3
+  185  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Hazara,Mbuti --f3
+  186  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Japanese,Hazara,Mbuti --f3
+  187  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Combodian,Hazara,Mbuti --f3
+  188  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Cambodian,Hazara,Mbuti --f3
+  189  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Mongolian,Hazara,Mbuti --f3
+  190  grep EAS poplist.txt | cut -f 2 | sort -u
+  191  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Buryat,Hazara,Mbuti --f3
+  192  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Dai,Hazara,Mbuti --f3
+  193  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Daur,Hazara,Mbuti --f3
+  194  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops HanNorth,Hazara,Mbuti --f3
+  195  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops HanSouth,Hazara,Mbuti --f3
+  196  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Hezhen,Hazara,Mbuti --f3
+  197  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Kinh,Hazara,Mbuti --f3
+  198  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Lahu,Hazara,Mbuti --f3
+  199  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Miao,Hazara,Mbuti --f3
+  200  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Naxi,Hazara,Mbuti --f3
+  201  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Oroqen,Hazara,Mbuti --f3
+  202  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops She,Hazara,Mbuti --f3
+  203  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tu,Hazara,Mbuti --f3
+  204  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tujia,Hazara,Mbuti --f3
+  205  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Xibo,Hazara,Mbuti --f3
+  206  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Yakut,Hazara,Mbuti --f3
+  207  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Yi,Hazara,Mbuti --f3
+  208  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Daur,Han,Hazara,Mbuti --f4
+  209  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Japanese,Han,Hazara,Mbuti --f4
+  210  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Daur,Cambodian,Hazara,Mbuti --f4
+  211  pwd
+  212  ls *ind
+  213  head RelaxedDataset2024_pruned.
+  214  head Relaxed_Dataset2024_pruned.
+  215  head Relaxed_Dataset2024_pruned.ind
+  216  head RelaxedDataset2024_pruned.ind
+  217  perl ../SCRIPTS/AnnotateEvec.pl Poplist.txt 2^C
+  218  perl ../SCRIPTS/AnnotateEvec.pl Poplist.txt 2 RelaxedDataset2024_pruned.ind temp.txt
+  219  head temp.txt 
+  220  mv temp.txt RelaxedDataset2024_pruned.ind
+  221  more ../OTHER/qpadm.par
+  222  cat ../OTHER/qpadm.par | sed -e "s/hgdp1kg_chr1_pruned/RelaxedDataset2024_pruned/g" > qpadm.par
+  223  touch left.txt
+  224  touch right.txt
+  225  qpAdm -p qpadm.par
+  226  history > 20240503
+  227  history > 20240503.txt
+  228  cd PracticeFolder2024/PLAYGROUND/
+  229  ls
+  230  ls poplist.txt
+  231  head poplist.txt
+  232  cat poplist.txt | cut -f 3 |head
+  233  cat poplist.txt | cut -f 3 | sort -u
+  234  head *fam
+  235  perl ../SCRIPTS/AnnotateFam.pl poplist.txt 2 RelaxedDataset2024_pruned.fam temp.txt
+  236  head temp.txt 
+  237  mv temp.txt RelaxedDataset2024_pruned.fam
+  238  grep -w Hazara poplist.txt
+  239  grep -w Hazara poplist.txt | head
+  240  grep -w Hazara Poplist.txt | awk '{print &2 "\t"$1}' | head
+  241  grep -w Hazara Poplist.txt | awk '{print &2 "\t" $1}' | head
+  242  grep -w Hazara Poplist.txt | awk '{print $2 "\t" $1}' | head
+  243  grep -w Hazara Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  244  grep -w Daur Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  245  grep -w Japanese Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  246  grep -w Cambodian Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  247  grep -w Mbuti Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  248  grep -w Balochi Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  249  grep -w Kalash Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  250  grep -w French Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  251  grep -w Adygei Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  252  grep -w Han Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  253  wc -l TreemixInds.txt 
+  254  grep -w Oroqen Poplist.txt | awk '{print $2 "\t" $1}' >> TreemixInds.txt
+  255  wc -l TreemixInds.txt 
+  256  head TreemixInds.txt 
+  257  plink --bfile RelaxedDataset2024_pruned -- keep TreemixInds.txt --make-bed --out ToTreemix
+  258  plink --bfile RelaxedDataset2024_pruned --keep TreemixInds.txt --make-bed --out ToTreemix
+  259  cat TreemixInds.txt |head
+  260  cat TreemixInds.txt | awk '{print $1 "\t" $2 "\t" $1}' > Populations.txt
+  261  plink --bfile ToTreemix --freq --within Populations.txt --out FreqTreemix
+  262  head FreqTreemix.frq.strat 
+  263  gzip FreqTreemix.frq.strat 
+  264  python ../SCRIPTS/plink2treemix.py FreqTreemix.frq.strat.gz Ready.frq.gz
+  265  hisory | grep treemix
+  266  history | grep treemix
+  267  wc .l *bim
+  268  treemix-i Ready.frq.gz -k 27 -o Haz0 -m 0 -root Mbuti
+  269  treemix -i Ready.frq.gz -k 27 -o Haz0 -m 0 -root Mbuti
+  270  treemix -i Ready.frq.gz -k 27 -o Haz1 -m 1 -root Mbuti
+  271  treemix -i Ready.frq.gz -k 27 -o Haz2 -m 2 -root Mbuti
+  272  ls*gz
+  273  ls *gz
+  274  R
+  275  cp ../OTHER/Hazara1.graph .
+  276  cp ../OTHER/hazara.par
+  277  cp ../OTHER/hazara.par .
+  278  ls *geno
+  279  qpGraph -p hazara.par -g Hazara1.graph -o Hazara1.txt -d hazara1.dot > hazara1_log.log
+  280  dot -Tps hazara1.dot > hazara1.ps
+  281  history > 20240509.txt
+  282  clear
+  283  cd PracticeFolder2024/PLAYGROUND/
+  284  cd PracticeFolder2024/DATA/
+  285  zact genetic_map_GRCh3|head
+  286  zact genetic_map_GRCh3_chr1.txt.gz  |head
+  287  zcat genetic_map_GRCh38_chr1.txt.gz  |head
+  288  zcat genetic_map_GRCh38_chr1.txt.gz  | awk '{print $2 "\t" $4 "\t" $3 }' | head
+  289  sahpeit -B Dataset2024 - M RecombinationMap_chr1.txt -0 Phased_Dataset2024
+  290  sahpeit -B Dataset2024 - M RecombinationMap_chr1.txt -O Phased_Dataset2024
+  291  sahpeit -B Dataset2024 -M RecombinationMap_chr1.txt -O Phased_Dataset2024
+  292  shapeit -B Dataset2024 -M RecombinationMap_chr1.txt -O Phased_Dataset2024
+  293  cd ../
+  294  cd PLAYGROUND/
+  295  qpGraph -p hazara.par -g Hazara1.graph -o Hazara1.txt -d hazara1.dot > hazara1_log.log
+  296  dot -Tps hazara1.dot > hazara2.ps
+  297  qpGraph -p hazara.par -g Hazara1.graph -o Hazara1.txt -d hazara1.dot > hazara1_log.log2
+  298  dot -Tps hazara1.dot > hazara3.ps
+  299  qpGraph -p hazara.par -g Hazara1.graph -o Hazara1.txt -d hazara1.dot > hazara1_log.log3
+  300  dot -Tps hazara1.dot > hazara4.ps
+  301  qpGraph -p hazara.par -g Hazara1.graph -o Hazara1.txt -d hazara1.dot > hazara1_log.log4
+  302  dot -Tps hazara1.dot > hazara5.ps
+  303  zcat genetic_map_GRCh38_chr1.txt.gz  | awk '{print $2 "\t" $4 "\t" $3 }' > RecombinationMap_chr1.txt
+  304  cd ../
+  305  cd DATA/
+  306  zcat genetic_map_GRCh38_chr1.txt.gz  | awk '{print $2 "\t" $4 "\t" $3 }' > RecombinationMap_chr1.txt
+  307  shapeit -B Dataset2024 -M RecombinationMap_chr1.txt -O Phased_Dataset2024
+  308  history > 20240510
+  309  cd PracticeFolder2024/PLAYGROUND/
+  310  mkdir PCADMIX
+  311  cd PCADMIX/
+  312  zcat Dataset2024_phased_fromVcf.bgl.gz | head |cut -f 1-10 -d ' '
+  313  more ../Poplist.txt
+  314  cat ../Poplist.txt | awk '$1=$1"_A"' | head
+  315  cat ../Poplist.txt | awk '$1=$1"_A"' >> Poplist_phased.txt
+  316  cat ../Poplist.txt | awk '$1=$1"_B"' >> Poplist_phased.txt
+  317  wc -l ../Poplist.txt 
+  318  wc -l ../Poplist_phased.txt 
+  319  wc -l Poplist_phased.txt 
+  320  grep -w Hazara Poplist_phased.txt 
+  321  grep -w Hazara Poplist_phased.txt > Hazara.txt
+  322  grep -w Han Poplist_phased.txt > Han.txt
+  323  grep -w French Poplist_phased.txt > French.txt
+  324  grep -w Han Poplist_phased.txt | head -56 | awk '{print $1 "\t" $1 "\t" $2}' > Han.txt
+  325  head Han.txt 
+  326  grep -w French Poplist_phased.txt | head -56 | awk '{print $1 "\t" $1 "\t" $2}' > French.txt
+  327  grep -w Hazara Poplist_phased.txt | head -56 | awk '{print $1 "\t" $1 "\t" $2}' > Hazara.txt
+  328  wc -l *txt
+  329  head French.txt Ha*txt
+  330  cp ../../SCRIPTS/PcadmixPipeline_mod.pl  .
+  331  perl PcadmixPipeline_mod.pl Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz Hazara.txt Han.txt French.txt run 1
+  332  cp ../../../bin/PCAdmix3_linux .
+  333  cp ../../SCRIPTS/PcadmixPipeline_wrap.pl .
+  334  perl PcadmixPipeline_wrap.pl 1 1 Hazara Hazara Hazara_overlap.bgl 20 run map.txt recmap.txt French_overlap.bgl Han_overlap.bgl
+  335  perl PcadmixPipeline_mod.pl Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz Hazara.txt Han.txt French.txt run 1
+  336  gzip -d 1_RecmapToPcadmix.txt.gz 
+  337  perl PcadmixPipeline_mod.pl Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz Hazara.txt Han.txt French.txt run 1
+  338  perl PcadmixPipeline_mod.pl Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt Hazara.txt Han.txt French.txt run 1
+  339  gzip -d 1_RecmapToPcadmix.txt.gz 
+  340  cp ../../SCRIPTS/PcadmixPipeline_wrap.pl .
+  341  cp ../../../bin/PCAdmix3_linux .
+  342  cp ../../SCRIPTS/PcadmixPipeline_wrap.pl .
+  343  gzip -d 1_RecmapToPcadmix.txt.gz 
+  344  history > 20240516.txt
+  345  history >> 20240516.txt
+  346  cd PracticeFolder2024/PLAYGROUND/PCADMIX/
+  347  mv Dataset2024_phased_fromVcf.bgl.gz 1_Dataset2024_phased_fromVcf.bgl.gz
+  348  perl PcadmixPipeline_mod.pl 1_Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz Hazara.txt Han.txt French.txt run 1
+  349  perl PcadmixPipeline_mod.pl 1_Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt Hazara.txt Han.txt French.txt run 1
+  350  ls -lh *gz
+  351  more 1_RecmapToPcadmix.txt 
+  352  ls
+  353  wc -l *txt
+  354  more French.txt 
+  355  head *txt
+  356  perl PcadmixPipeline_mod.pl 1_Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt Hazara.txt Han.txt French.txt run 1
+  357  perl PcamixPipeline_wrap.pl 1 1 Hazara Hazara Hazara_overlap.bgl 200 run map.txt recamp.txt French_overlap.bgl Han_overlap.bgl
+  358  cp ../../SCRIPTS/PcadmixPipeline_wrap.pl .
+  359  perl PcamixPipeline_wrap.pl 1 1 Hazara Hazara Hazara_overlap.bgl 200 run map.txt recamp.txt French_overlap.bgl Han_overlap.bgl
+  360  perl PcadmixPipeline_wrap.pl 1 1 Hazara Hazara Hazara_overlap.bgl 200 run map.txt recamp.txt French_overlap.bgl Han_overlap.bgl
+  361  tail -1 1Hazara_overlap.bgl
+  362  ls -lh *txt
+  363  perl PcadmixPipeline_wrap.pl 1 1 Hazara Hazara Hazara_overlap.bgl 200 run map.txt recmap.txt French_overlap.bgl Han_overlap.bgl
+  364  tail -1 1Hazara_overlap.bgl
+  365  ls -lh *txt
+  366  more 1Hazaraw200.vit.txt
+  367  perl ../../SCRIPTS/PcadmixPipeline_PropAndDatingAndSwitch.pl 1 1 Hazara 0.9 Hazara Hazara_overlap.bgl 200 prop map.txt recmap.txt French_overlap.bgl Han_overlap.bgla
+  368  perl ../../SCRIPTS/PcadmixPipeline_PropAndDatingAndSwitch.pl 1 1 Hazara 0.9 Hazara_overlap.bgl 200 prop map.txt recmap.txt French_overlap.bgl Han_overlap.bgla
+  369  more Hazara_w20
+  370  more Hazara_w200_0.9_PropsNofBlocksAndDating.txt 
+  371  R
+  372  perl ../../SCRIPTS/PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl Dataset2024_phased_fromVcf Hazaraw200 1 0.9
+  373  perl ../../SCRIPTS/PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl Hazaraw200 Dataset2024_phased_fromVcf 1 0.9
+  374  ls -lht | head
+  375  plink --bfile 1Hazaraw200_MaskedWith1pops_fbk0.9 --missing --out seeHazara
+  376  head seeHazara.imiss
+  377  cat seeHazara.imiss | awk '$6>0.1'
+  378  cd ../
+  379  history >> 20240517.txt
+  380  cd PracticeFolder2024/PLAYGROUND/PCADMIX/
+  381  ls -lht |head -20
+  382  grep -0 1Hazaraw200_MaskedWith1pops_fbk0.9..fam
+  383  grep -0 1Hazaraw200_MaskedWith1pops_fbk0.9.fam
+  384  grep -1 1Hazaraw200_MaskedWith1pops_fbk0.9.fam
+  385  grep _1 1Hazaraw200_MaskedWith1pops_fbk0.9.fam
+  386  head Poplist_phased.txt 
+  387  grep Hazara Poplist_phased.txt 
+  388  grep -w  Hazara Poplist_phased.txt | sed -e"Hazara/HazaraFrench/g" | awk '{ print $1"_0" "\t" $2 "\t" $3}' |head
+  389  grep -w  Hazara Poplist_phased.txt | sed -e "s/Hazara/HazaraFrench/g" | awk '{ print $1"_0" "\t" $2 "\t" $3}' |head
+  390  grep -w  Hazara Poplist_phased.txt | sed -e "s/Hazara/HazaraFrench/g" | awk '{ print $1"_0" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  391  grep -w  Hazara Poplist_phased.txt | sed -e "s/Hazara/HazaraHan/g" | awk '{ print $1"_0" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  392  ls ../*prune.in*
+  393  wc -l ../*prune.in*
+  394  plink --bfile 1Hazaraw200_MaskedWith1pops_fbk0.9 --indep-pairwise 50 10 0.4 --out prunemask
+  395  plink --bfile 1Hazaraw200_MaskedWith1pops_fbk0.9 --extract prunemask.prune.in --recode transpose --out HazaraMasked_pruned
+  396  plink --bfile 1Hazaraw200_MaskedWith1pops_fbk0.9 --extract prunemask.prune.in --make-bed --out HazaraMasked_pruned
+  397  ls -lht | head
+  398  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 HazaraMasked_pruned.fam temp.txt
+  399  mv temp.txt HazaraMasked_pruned.fam
+  400  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 HazaraMasked_pruned.tfam temp.txt
+  401  mv temp.txt HazaraMasked_pruned.tfam
+  402  ls
+  403  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops french,Han,HazaraHan,Mbuti --4
+  404  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Han,HazaraHan,Mbuti --4
+  405  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Han,HazaraHan,Mbuti --
+  406  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Han,HazaraHan,Mbuti --F4
+  407  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Han,HazaraHan,Mbuti --f4
+  408  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Oroqen,HazaraHan,Mbuti --f4
+  409  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Han,HazaraHan,Mbuti --f4
+  410  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Japanese,HazaraHan,Mbuti --f4
+  411  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops french,Balochi,HazaraFrench,Mbuti --f4
+  412  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Balochi,HazaraFrench,Mbuti --f4
+  413  grep Hazara *tfam
+  414  grep French Poplist_phased.txt 
+  415  grep _0 *tfam
+  416  grep -w  Hazara Poplist_phased.txt | sed -e "s/Hazara/HazaraHan/g" | awk '{ print $1"_1" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  417  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 HazaraMasked_pruned.tfam temp.txt
+  418  mv temp.txt HazaraMasked_pruned.tfam
+  419  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 HazaraMasked_pruned.fam temp.txt
+  420  mv temp.txt HazaraMasked_pruned.fam
+  421  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Balochi,HazaraFrench,Mbuti --f4
+  422  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Tuscan,Balochi,HazaraFrench,Mbuti --f4
+  423  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Japanese,HazaraHan,Mbuti --f4
+  424  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Han,HazaraHan,Mbuti --f4
+  425  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops Daur,Oroqen,HazaraHan,Mbuti --f4
+  426  python ../../SCRIPTS/popstats.py --file HazaraMasked_pruned --pops French,Han,HazaraHan,Mbuti --f4
+  427  grep EUROPE Poplist_phased.txt | awk '{print $1 "\t" $1 "\t"} >> KeepPCA.txt
+  428  rm KeepPCA.txt
+  429  grep EUROPE Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"} >> KeepPCA.txt
+  430  grep EUROPE Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA.txt
+  431  grep ASIA Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA.txt
+  432  wc -l KeepPCA.txt 
+  433  head KeepPCA.txt 
+  434  plink --bfile HazaraMasked_pruned --keep KeepPCA.txt --make-bed --out ToPca
+  435  ls ../*par
+  436  cat ../convertrelax.par 
+  437  cat ../convertrelax.par | sed -e "s/RelaxedDataset2024_pruned/ToPca/g" > maskedpca.txt
+  438  convertf -p maskedpca.txt
+  439  more ../../OTHER/eurasia.pca.par 
+  440  more ../../OTHER/example.pca.par 
+  441  cat ../../OTHER/example.pca.par | sed -e "s/mergeHGDPchr1_1kg_pruned/ToPca/g" > maskedpca.pca.par
+  442  touch scaffold.txt
+  443  head ToPca.ind
+  444  smartpca -p maskedpca.pca.par 
+  445  prl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt 
+  446  perl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt 
+  447  head Poplist_phased.txt 
+  448  perl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt 3 toPca.pca.evek temp.txt
+  449  perl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt 3 toPca.pca.evec temp.txt
+  450  mv temp.txt ToPca.pca.evec
+  451  history >> 23052024.txt
+  452  grep f3
+  453  history | grep f3
+  454  grep ToF
+  455  history | grep To
+  456  cd PracticeFolder2024/
+  457  cd    PLAYGROUND/
+  458  history | grep f3
+  459  ls ToFstats_pruned.*
+  460  ls * | grep ToFs
+  461  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Biaka,French,PuertoRican --f3
+  462  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Biaka,British,PuertoRican --f3
+  463  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Maya,British,PuertoRican --f3
+  464  grep AMERICA Poplist.txt 
+  465  grep AMERICA Poplist.txt | cut -f 3 | sort -u
+  466  history >> 240524firsthourofproject.txt
+  467  cd PracticeFolder2024/PLAYGROUND/
+  468  grep AMERICA Poplist.txt | cut -f 3 | sort -u
+  469  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Maya,British,PuertoRican --f3 >> f333.txt
+  470  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Maya,British,PuertoRican --f3 >> PersonalProject2405.txt
+  471  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Biaka,British,PuertoRican --f3 >> PersonalProject2405.txt
+  472  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,PuertoRican,French,Mbuti --f4
+  473  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,British,French,Mbuti --f4
+  474  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,PuertoRican,French,Mbuti --f4 >> PersonalProject2405.txt 
+  475  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,PuertoRican,Yoruba,Mbuti --f4
+  476  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Biaka,Yoruba,Mbuti --f4
+  477  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,PuertoRican,Maya,Mbuti --f4
+  478  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Han,Karitiana,Maya,Mbuti --f4
+  479  grep EUROPE Poplist.txt | cut -f 3 | sort -u
+  480  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Adygey,PuertoRican,Mbuti --f3
+  481  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Adygei,PuertoRican,Mbuti --f3
+  482  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Basque,PuertoRican,Mbuti --f3
+  483  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops British,PuertoRican,Mbuti --f3
+  484  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops CentralEuropean,PuertoRican,Mbuti --f3
+  485  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Finnish,PuertoRican,Mbuti --f3
+  486  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Iberian,PuertoRican,Mbuti --f3
+  487  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops ItalianBergamo,PuertoRican,Mbuti --f3
+  488  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Orcadian,PuertoRican,Mbuti --f3
+  489  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Russian,PuertoRican,Mbuti --f3
+  490  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Sardinian,PuertoRican,Mbuti --f3
+  491  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tuscan,PuertoRican,Mbuti --f3
+  492  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Basque,PuertoRican,Mbuti --f3 >> PersonalProject2405.txt 
+  493  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops CentralEuropean,PuertoRican,Mbuti --f3 >> PersonalProject2405.txt 
+  494  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops British,PuertoRican,Mbuti --f3 >> PersonalProject2405.txt 
+  495  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops ItalianBergamo,PuertoRican,Mbuti --f3 >> PersonalProject2405.txt 
+  496  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Basque,CentralEuropean,PuertoRican,Mbuti --f4
+  497  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops CentralEuropean,Basque,PuertoRican,Mbuti --f4
+  498  qpAdm -p qpadmProject.par
+  499  qpAdm -p qpadm.par
+  500  ls *par
+  501  head hazara.par
+  502  ls *hazara.graph
+  503  cp Puertorican.graph
+  504  touch Puertorican.graph
+  505  cp Puertorican.graph 
+  506  qpGraph -p hazara.par -g Puertorican.graph -o hazara.txt -d hazara.dot > PuertoRican_log.log
+  507  dot -Tps hazara1.dot > PuertoRican.ps
+  508  qpGraph -p hazara.par -g Puertorican.graph -o PuertoRican.txt -d PuertoRican.dot > PuertoRican_log.log
+  509  dot -Tps PuertoRican.dot > PuertoRican.ps
+  510  qpGraph -p hazara.par -g Puertorican.graph -o PuertoRican.txt -d PuertoRican.dot > PuertoRican_log.log
+  511  dot -Tps PuertoRican.dot > PuertoRican.ps
+  512  qpAdm -p qpadm.par >> PersonalProject2405.txt 
+  513  history >> 20240524.txt
+  514  cd PracticeFolder2024/PLAYGROUND/AdmixtureExport/
+  515  grep CV
+  516  grep CV *txt
+  517  grep AMERICAN poplist.txt | cut -f 2
+  518  grep AMERICAN Poplist.txt | cut -f 2
+  519  cd ../
+  520  grep AMERICAN Poplist.txt | cut -f 2
+  521  grep AMERICAN Poplist.txt | cut -f 2 | sort -u
+  522  grep AMERICA Poplist.txt | cut -f 2 | sort -u
+  523  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Yoruba,French,PuertoRican --f3
+  524  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops PuertoRican,Baque,Mbuti --f3
+  525  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops PuertoRican,Basque,Mbuti --f3
+  526  history | grep perl
+  527  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tuscan,Basque,Puertorican,Mbuti --f3
+  528  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tuscan,Basque,Puertorican,Mbuti --f4
+  529  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tuscan,Basque,PuertoRican,Mbuti --f4
+  530  qpAdm -p qpadm.par
+  531  history >> 30.05.24.txt
+  532  cd PracticeFolder2024/PLAYGROUND/
+  533  grep prune
+  534  grep pruned *t
+  535  grep pruned *txt
+  536  grep phased *txt
+  537  head Poplist_phased.txt
+  538  grep -w Yoruba Poplist_phased.txt
+  539  ls 
+  540  head Poplist.txt
+  541  grep -w PuertoRican Poplist_phased.txt > PuertoRican.txt
+  542  cd PCADMIX/
+  543  grep -w PuertoRican Poplist_phased.txt > PuertoRican.txt
+  544  grep -w Yoruba Poplist_phased.txt > Yoruba.txt
+  545  grep -w Basque Poplist_phased.txt > Basque.txt
+  546  grep -w Karitiana Poplist_phased.txt > Karitiana.txt
+  547  grep -w PuertoRican Poplist_phased.txt | head -38 | awk '{print $1 "\t" $1 "\t" $2}' > PuertoRican.txt
+  548  grep -w Yoruba Poplist_phased.txt | head -38 | awk '{print $1 "\t" $1 "\t" $2}' > Yoruba.txt
+  549  grep -w Basque Poplist_phased.txt | head -38 | awk '{print $1 "\t" $1 "\t" $2}' > Basque.txt
+  550  grep -w Karitiana Poplist_phased.txt | head -38 | awk '{print $1 "\t" $1 "\t" $2}' > Karitiana.txt
+  551  perl PcadmixPipeline_mod.pl Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz PuertoRican.txt Yoruba.txt Basque.txt Karitiana.txt run 1
+  552  perl PcadmixPipeline_mod.pl 1_Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt.gz PuertoRican.txt Yoruba.txt Basque.txt Karitiana.txt run 1
+  553  perl PcadmixPipeline_mod.pl 1_Dataset2024_phased_fromVcf.bgl.gz 1_RecmapToPcadmix.txt PuertoRican.txt Yoruba.txt Basque.txt Karitiana.txt run 1
+  554  perl PcamixPipeline_wrap.pl 1 1 PuertoRican PuertoRican 1PuertoRican_overlap.bgl 200 run 1map.txt 1recamp.txt 1Basque_overlap.bgl 1Yoruba_overlap.bgl 1Karitiana_overlap.bgl 
+  555  perl PcamixPipeline_wrap.pl 1 1 PuertoRican PuertoRican PuertoRican_overlap.bgl 200 run map.txt recamp.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl 
+  556  perl PcadmixPipeline_wrap.pl 1 1 PuertoRican PuertoRican PuertoRican_overlap.bgl 200 run map.txt recamp.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl 
+  557  perl PcadmixPipeline_wrap.pl 1 1 PuertoRican PuertoRican PuertoRican_overlap.bgl 200 run map.txt recmap.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl 
+  558  tail -1 1PuertoRican_overlap.bgl
+  559  more 1Hazaraw200.vit.txt
+  560  R
+  561  perl ../../SCRIPTS/PcadmixPipeline_PropAndDatingAndSwitch.pl 1 1 PuertoRican 0.9 PuertoRican PuertoRican_overlap.bgl 200 prop map.txt recmap.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl
+  562  perl ../../SCRIPTS/PcadmixPipeline_PropAndDatingAndSwitch.pl 1 1 PuertoRican 0.9 PuertoRican_overlap.bgl 200 prop map.txt recmap.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl
+  563  cp ../../SCRIPTS/PcadmixPipeline_PropAndDatingAndSwitch.pl .
+  564  perl PcadmixPipeline_PropAndDatingAndSwitch.pl 1 1 PuertoRican 0.9 PuertoRican_overlap.bgl 200 prop map.txt recmap.txt Basque_overlap.bgl Yoruba_overlap.bgl Karitiana_overlap.bgl
+  565  more PuertoRican_w200_0.9_PropsNofBlocksAndDating.txt 
+  566  R
+  567  perl ../../SCRIPTS/PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl Dataset2024_phased_fromVcf PuertoRicanw200 2 0.9
+  568  cp ../../SCRIPTS/PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl .
+  569  perl PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl Dataset2024_phased_fromVcf PuertoRicanw200 2 0.9
+  570  ls *vit*
+  571  perl PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl 1_Dataset2024_phased_fromVcf PuertoRicanw200 2 0.9
+  572  ls -lh 1Puerto*txt
+  573  more 1PuertoRicanw200.vit.txt 
+  574  perl PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl PuertoRicanw200 1_Dataset2024_phased_fromVcf  2 0.9
+  575  perl PcadmixPipeline_maskedVCFfromBroaderBgl_OneIndPerStateFBKthreshold.pl PuertoRicanw200 Dataset2024_phased_fromVcf 2 0.9
+  576  history >> 30.05.24lastedition.txt
+  577  history | ls *pca*
+  578  grep -w Yoruba Poplist_phased.txt
+  579  cd PracticeFolder2024/PLAYGROUND/
+  580  grep -w Yoruba Poplist_phased.txt
+  581  cd PCADMIX/
+  582  grep -w Yoruba Poplist_phased.txt
+  583  grep -w AMERICA Poplist_phased.txt
+  584  grep America Poplist_phased.txt 
+  585  grep America Poplist_phased.txt | sort -u
+  586  grep America Poplist_phased.txt | cut -f 2 | sort -u
+  587  grep America Poplist_phased.txt | cut -f 2 
+  588  grep America Poplist_phased.txt
+  589  grep America Poplist_phased.txt | cut -f 2 
+  590  clear
+  591  history | grep masked
+  592  ls -lht | head
+  593  head 1PuertoRicanw200_MaskedWith2pops_fbk0.9.fam
+  594  head 1PuertoRicanw200_MaskedWith2pops_fbk0.9.bed
+  595  head 1PuertoRicanw200_MaskedWith2pops_fbk0.9.fam
+  596  head 1PuertoRicanw200_MaskedWith2pops_fbk0.9.bim
+  597  ls *Puertorican
+  598  grep *PuertoR
+  599  ls *Puerto
+  600  ls
+  601  ls *Puer*
+  602  ls *Puer* | sort -u
+  603  ls *overlap* | sort -u
+  604  ls *overlap* | sort -t
+  605  ls *overlap* 
+  606  grep 1PuertoRican_overlap.bgl | head
+  607  grep 1PuertoRican_overlap.bgl 
+  608  ls *bgl.gz
+  609  cat 1PuertoRican_overlap.bgl |head
+  610  cat 1_Dataset2024_phased_fromVcf.bgl.gz | head
+  611  grep -w  PuertoRican Poplist_phased.txt | sed -e "s/PuertoRican/PuertoRicanBasque/g" | awk '{ print $1"_0" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  612  grep -w  PuertoRican Poplist_phased.txt | sed -e "s/PuertoRican/PuertoRicanYoruba/g" | awk '{ print $1"_1" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  613  grep -w  PuertoRican Poplist_phased.txt | sed -e "s/PuertoRican/PuertoRicanKaritiana/g" | awk '{ print $1"_2" "\t" $2 "\t" $3}' >> Poplist_phased.txt 
+  614  plink --bfile 1PuertoRicanw200_MaskedWith2pops_fbk0.9 --indep-pairwise 50 10 0.4 --out prunemask1
+  615  plink --bfile 1PuertoRicanw200_MaskedWith1pops_fbk0.9 --extract prunemask1.prune.in --recode transpose --out PuertoRicanMasked_pruned
+  616  ls -lht | head
+  617  plink --bfile 1PuertoRicanw200_MaskedWith2pops_fbk0.9 --extract prunemask1.prune.in --recode transpose --out PuertoRicanMasked_pruned
+  618  plink --bfile 1PuertoRicanw200_MaskedWith2pops_fbk0.9 --extract prunemask1.prune.in --make-bed --out PuertoRicanMasked_pruned
+  619  ls -lht | head
+  620  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 PuertoRicanMasked_pruned.fam temp.txt
+  621  mv temp.txt PuertoRicanMasked_pruned.fam 
+  622  perl ../../SCRIPTS/AnnotateFam.pl poplist_phased.txt 2 PuertoRicanMasked_pruned.tfam temp.txt
+  623  mv temp.txt PuertoRicanMasked_pruned.tfam 
+  624  history | grep f4
+  625  python ../SCRIPTS/popstats.py --file ToFstats_pruned --pops Tuscan,Basque,PuertoRican,Mbuti --f4
+  626  cd ../
+  627  python ../SCRIPTS/popstats.py --file PuertoRicanMasked_Pruned --pops Tuscan,Basque,PuertoRican,Mbuti --f4
+  628  history > 31.05.24firsth.txt
+  629  cd PracticeFolder2024/PLAYGROUND/PCADMIX/
+  630  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,Mexican,French,Mbuti --4
+  631  ython ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,Mexican,French,Mbuti --4
+  632  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,Mexican,French,Mbuti --f4
+  633  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,Mexican,British,Mbuti --f4
+  634  cat AMERICA PuertoRicanMasked_pruned.fam
+  635  cat -w AMERICA PuertoRicanMasked_pruned.fam
+  636  cd ../
+  637  ls 
+  638  cd PCADMIX/
+  639  ls
+  640  ls Poplist_phased.txt 
+  641  ls Poplist_phased.txt | grep *AME
+  642  ls Poplist_phased.txt | head
+  643  ls Poplist_phased.txt | grep AMERICA
+  644  ls Poplist_phased.txt | grep -w  AMERICA
+  645  ls Poplist_phased.txt | grep -w *AM
+  646  cat Poplist_phased.txt 
+  647  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanKaritiana,French,Mexican,Mbuti --f4
+  648  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,French,Yoruba,Mbuti --f4
+  649  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,French,Esan,Mbuti --f4
+  650  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,Surui,Esan,Mbuti --f4
+  651  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,Surui,Mende,Mbuti --f4
+  652  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,Surui,Gambian,Mbuti --f4
+  653  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,French,Gambian,Mbuti --f4
+  654  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,Surui,British,Mbuti --f4
+  655  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanBasque,PuertoRican,British,Mbuti --f4
+  656  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanKaritiana,PuertoRican,Surui,Mbuti --f4
+  657  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops PuertoRicanYoruba,PuertoRican,Mende,Mbuti --f4
+  658  grep Yoruba Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  659  grep Mende Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  660  grep Karitiana Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  661  grep Surui Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  662  grep French Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  663  grep British Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  664  grep Basque Poplist_phased.txt | awk '{print $2 "\t" $1 "\t"}' >> KeepPCA1.txt
+  665  plink --bfile PuertoRicanMasked_pruned --keep KeepPCA1.txt --make-bed --out ToPca1
+  666  cat ../convertrelax.par | sed -e "s/RelaxedDataset2024_pruned/ToPca1/g" > maskedpca1.txt
+  667  convertf -p maskedpca1.txt
+  668  cat ../../OTHER/example.pca.par | sed -e "s/mergeHGDPchr1_1kg_pruned/ToPca1/g" > maskedpca1.pca.par
+  669  smartpca -p maskedpca1.pca.par
+  670  perl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt
+  671  perl ../../SCRIPTS/AnnotateEvec.pl Poplist_phased.txt 3 toPca1.pca.evec temp.txt
+  672  mv temp.txt ToPca1.pca.evec
+  673  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops Basque,British,PuertoRicanBasque,Mbuti --f4
+  674  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops French,British,PuertoRicanBasque,Mbuti --f4
+  675  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops Fr,PuertoRicanBasque,Mbuti --f3
+  676  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops French,PuertoRicanBasque,Mbuti --f3
+  677  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops British,PuertoRicanBasque,Mbuti --f3
+  678  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops Basque,PuertoRicanBasque,Mbuti --f3
+  679  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops Surui,Mexican,PuertoRicanKaritiana,Mbuti --f3
+  680  python ../../SCRIPTS/popstats.py --file PuertoRicanMasked_pruned --pops Surui,Mexican,PuertoRicanKaritiana,Mbuti --f4
+  681  history -lht
+  682  histroy
+  683  history
+  684  history >> 31.05.24lastEditionofproject.txt
